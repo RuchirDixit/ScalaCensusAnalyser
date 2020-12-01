@@ -4,12 +4,12 @@ import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException.Issue
 
 /**
- * Created on 11/20/2020.
+ * Created on 11/30/2020.
  * Class: CensusAnalyzer.scala
  * Author: Rajat G.L.
  */
 class CensusAnalyzer {
-  def loadCSVInfo(filePath: String): Int = {
+  def loadCSVData(filePath: String): Int = {
     try {
       if(!filePath.endsWith(".csv")) {
         throw new CensusAnalyzerException(Issue.INCORRECT_FILE)
@@ -17,13 +17,13 @@ class CensusAnalyzer {
       val FileReader = io.Source.fromFile(filePath)
       var rowsCounted = 0
       for(line <- FileReader.getLines()) {
-        val cols = line.split(",").map(_.trim)
-        if(cols.length != 4) {
+        val column = line.split(",").map(_.trim)
+        if(column.length != 4) {
           throw new CensusAnalyzerException(Issue.INVALID_DELIMITER)
         }
         if(rowsCounted == 0){
-          if(cols(0).toLowerCase != "state" || cols(1).toLowerCase != "population" ||
-            cols(2).toLowerCase != "areainsqkm" || cols(3).toLowerCase != "densitypersqkm" ) {
+          if(column(0).toLowerCase != "state" || column(1).toLowerCase != "population" ||
+            column(2).toLowerCase != "areainsqkm" || column(3).toLowerCase != "densitypersqkm" ) {
             throw new CensusAnalyzerException(Issue.INVALID_FIELDS)
           }
         }
