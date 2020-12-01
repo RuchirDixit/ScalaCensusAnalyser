@@ -9,8 +9,10 @@ import com.bridgelabz.censusanalyser.CensusAnalyzer
  */
 object CSVDriver {
   def main(args: Array[String]): Unit = {
-    val indianStateCensusDataPath = "asset/IndiaStateCensusData.csv"
+    val indiaStateCensusDataPath = "asset/IndiaStateCensusData.csv"
+    val indiaStateCodePath = "asset/IndiaStateCode.csv"
     val censusAnalyserObject = new CensusAnalyzer()
-    censusAnalyserObject.loadCSVData(indianStateCensusDataPath)
+    censusAnalyserObject.loadIndiaStateCensusData(indiaStateCensusDataPath)
+    censusAnalyserObject.loadIndiaStateCodeData(indiaStateCodePath)
   }
 }
