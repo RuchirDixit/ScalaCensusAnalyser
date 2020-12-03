@@ -1,6 +1,8 @@
 package com.bridgelabz.censusanalysertest
 
-import com.bridgelabz.censusanalyser.CensusAnalyzer
+import com.bridgelabz.censusanalyser.IndiaStateCensusDataAnalyser.loadIndiaStateCensusData
+import com.bridgelabz.censusanalyser.IndiaStateCodeAnalyser.loadIndiaStateCode
+import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException.Issue
 import org.scalatest.FunSuite
 
@@ -16,49 +18,48 @@ class CensusAnalyserTest extends FunSuite {
   val wrongFileTypeIndiaStateCodePath = "asset/IndiaStateCode.pdf"
   val wrongHeaderIndiaStateCodePath = "asset/IndiaStateCodeWrongHeader.csv"
 
-  val CensusAnalyzerObj = new CensusAnalyzer()
   test("givenIndianCensusCSVFileShouldReturnCorrectNumberOfRecords") {
-    assert(CensusAnalyzerObj.loadIndiaStateCensusData(indiaStateCensusDataPath) === 29)
+    assert(loadIndiaStateCensusData(indiaStateCensusDataPath) === 29)
   }
   test("givenIndianCensusDataCSVFileIfWrongFilePathShouldThrowException") {
-    val thrown = intercept[Exception] {
-      CensusAnalyzerObj.loadIndiaStateCensusData(wrongFilePathForIndiaStateCensusData)
+    val thrown = intercept[CensusAnalyzerException] {
+      loadIndiaStateCensusData(wrongFilePathForIndiaStateCensusData)
     }
-    assert(thrown.getMessage === Issue.PATH_INCORRECT.toString)
+    assert(thrown.error === Issue.PATH_INCORRECT)
   }
   test("givenIndianCensusDataFileIfWrongTypeShouldThrowException") {
-    val thrown = intercept[Exception] {
-      CensusAnalyzerObj.loadIndiaStateCensusData(wrongTypeOfIndiaStateCensusData)
+    val thrown = intercept[CensusAnalyzerException] {
+     loadIndiaStateCensusData(wrongTypeOfIndiaStateCensusData)
     }
-    assert(thrown.getMessage === Issue.INCORRECT_FILE.toString)
+    assert(thrown.error === Issue.INCORRECT_FILE)
   }
   test("givenIndianCensusDataFileIfWrongHeaderShouldThrowException") {
-    val thrown = intercept[Exception] {
-      CensusAnalyzerObj.loadIndiaStateCensusData(wrongHeaderIndiaStateCensusPath)
+    val thrown = intercept[CensusAnalyzerException] {
+      loadIndiaStateCensusData(wrongHeaderIndiaStateCensusPath)
     }
-    assert(thrown.getMessage === Issue.INVALID_FIELDS.toString)
+    assert(thrown.error === Issue.INVALID_FIELDS)
   }
 
   test("givenIndiaStateCodeCSVFileShouldReturnCorrectNumberOfRecords") {
-    assert(CensusAnalyzerObj.loadIndiaStateCodeData(indiaStateCodeDataPath) === 37)
+    assert(loadIndiaStateCode(indiaStateCodeDataPath) === 37)
   }
   test("givenIndiaStateCodeCSVFileIfWrongFilePathShouldThrowException") {
-    val thrown = intercept[Exception] {
-      CensusAnalyzerObj.loadIndiaStateCodeData(wrongIndiaStateCodeFilePath)
+    val thrown = intercept[CensusAnalyzerException] {
+      loadIndiaStateCode(wrongIndiaStateCodeFilePath)
     }
-    assert(thrown.getMessage === Issue.PATH_INCORRECT.toString)
+    assert(thrown.error === Issue.PATH_INCORRECT)
   }
   test("givenIndiaStateCodeFileIfWrongTypeShouldThrowException") {
-    val thrown = intercept[Exception] {
-      CensusAnalyzerObj.loadIndiaStateCensusData(wrongFileTypeIndiaStateCodePath)
+    val thrown = intercept[CensusAnalyzerException] {
+      loadIndiaStateCode(wrongFileTypeIndiaStateCodePath)
     }
-    assert(thrown.getMessage === Issue.INCORRECT_FILE.toString)
+    assert(thrown.error === Issue.INCORRECT_FILE)
   }
   test("givenIndiaStateCodeFileIfWrongHeaderShouldThrowException") {
-    val thrown = intercept[Exception] {
-      CensusAnalyzerObj.loadIndiaStateCensusData(wrongHeaderIndiaStateCodePath)
+    val thrown = intercept[CensusAnalyzerException] {
+      loadIndiaStateCode(wrongHeaderIndiaStateCodePath)
     }
-    assert(thrown.getMessage === Issue.INVALID_FIELDS.toString)
+    assert(thrown.error === Issue.INVALID_FIELDS)
   }
 
 }
