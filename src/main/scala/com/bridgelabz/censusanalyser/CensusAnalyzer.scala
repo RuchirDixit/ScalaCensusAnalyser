@@ -1,5 +1,7 @@
 package com.bridgelabz.censusanalyser
 
+import java.util
+
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException.Issue
 
@@ -12,8 +14,9 @@ import scala.io.Source
  */
 object CensusAnalyzer {
   @throws[CensusAnalyzerException]
-  def loadCSVData(filePath: String, headers: Array[String]): Int = {
+  def loadCSVData(filePath: String, headers: Array[String]): util.ArrayList[util.ArrayList[String]] = {
     try {
+      val table = new util.ArrayList[util.ArrayList[String]]()
       if (!filePath.endsWith(".csv")) {
         throw new CensusAnalyzerException(Issue.INCORRECT_FILE)
       }
@@ -30,10 +33,15 @@ object CensusAnalyzer {
               throw new CensusAnalyzerException(Issue.INVALID_FIELDS)
             }
         }
+        val colsArray: util.ArrayList[String] = new util.ArrayList()
+        for(stringAdd <- column){
+          colsArray.add(stringAdd)
+        }
+        table.add(colsArray)
         rowsCounted += 1
       }
       FileReader.close()
-      rowsCounted - 1
+      table
     }
     catch {
       case _: java.io.FileNotFoundException =>
