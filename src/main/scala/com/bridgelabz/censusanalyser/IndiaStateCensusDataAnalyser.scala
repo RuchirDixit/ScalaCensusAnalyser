@@ -12,7 +12,7 @@ import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 object IndiaStateCensusDataAnalyser {
 
   var table: util.List[IndiaStateCensus] = new util.ArrayList()
-  var map: Map[String, IndiaStateCensus] = Map[String, IndiaStateCensus]()
+  var map: Map[String, CensusDAO] = Map[String, CensusDAO]()
 
   @throws[CensusAnalyzerException]
   def loadIndiaStateCensusData(path: String = "asset/IndiaStateCensusData.csv"): Int = {
@@ -28,7 +28,7 @@ object IndiaStateCensusDataAnalyser {
 
   def loadIndiaStateCensusDataAsMap(path: String = "asset/IndiaStateCensusData.csv"): Unit = {
 
-    map = table.map(item => (item.state, item)).toMap
+    map = table.map(item => (item.state, new CensusDAO(item))).toMap
   }
 
   def sortStateCensusDataByColumnIndex(column: Int): Unit = {

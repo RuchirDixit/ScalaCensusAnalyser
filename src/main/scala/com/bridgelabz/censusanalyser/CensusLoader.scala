@@ -63,6 +63,7 @@ object CensusLoader {
       val line: String = fileReader.readLine()
 
       val column = line.split(",").map(_.trim)
+
       if (column.length != headers.length) {
         throw new CensusAnalyzerException(Issue.INVALID_DELIMITER)
       }
