@@ -1,7 +1,9 @@
 package com.bridgelabz.censusanalyser
 
+import java.nio.file.{Files, Paths}
 import java.util
 
+import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException.Issue
 
@@ -12,8 +14,9 @@ import scala.io.Source
  * Class: CensusAnalyzer.scala
  * Author: Rajat G.L.
  */
-object CensusAnalyzer {
+object CensusLoader {
   @throws[CensusAnalyzerException]
+  @Deprecated
   def loadCSVData(filePath: String, headers: Array[String]): util.ArrayList[util.ArrayList[String]] = {
     try {
       val table = new util.ArrayList[util.ArrayList[String]]()

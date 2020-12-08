@@ -6,5 +6,7 @@ package com.bridgelabz.censusanalyser
  * Author: Rajat G.L.
  */
 object CSVBuilderFactory {
-
+  def createCSVBuilder(): CSVBuilderTrait = {
+    new OpenCSVBuilder()
+  }
 }
