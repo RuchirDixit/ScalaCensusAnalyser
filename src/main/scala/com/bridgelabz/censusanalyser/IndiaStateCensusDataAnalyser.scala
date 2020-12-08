@@ -2,7 +2,8 @@ package com.bridgelabz.censusanalyser
 
 import java.util
 
-import com.bridgelabz.censusanalyser.CensusAnalyzer.loadCSVData
+import com.bridgelabz.censusanalyser.CensusLoader.loadCSVData
+import com.bridgelabz.censusanalyser.IndiaStateCodeAnalyser.sortStateCodeByColumnIndex
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 
 object IndiaStateCensusDataAnalyser {
@@ -32,6 +33,10 @@ object IndiaStateCensusDataAnalyser {
 
   def sortStateCensusDataByStateName(): Unit ={
     sortStateCensusDataByColumnIndex(0)
+  }
+
+  def sortStateCensusDataByPopulation():Unit = {
+    sortStateCensusDataByColumnIndex(1)
   }
 
   def printStateCensusData(): Unit ={

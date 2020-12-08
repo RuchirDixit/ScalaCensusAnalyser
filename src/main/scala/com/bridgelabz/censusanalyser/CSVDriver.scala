@@ -2,7 +2,7 @@ package com.bridgelabz.censusanalyser
 
 import java.util
 
-import com.bridgelabz.censusanalyser.IndiaStateCensusDataAnalyser.{loadIndiaStateCensusData, printStateCensusData, sortStateCensusDataByStateName, table}
+import com.bridgelabz.censusanalyser.IndiaStateCensusDataAnalyser.{loadIndiaStateCensusData, printStateCensusData, sortStateCensusDataByPopulation, sortStateCensusDataByStateName, table}
 import com.bridgelabz.censusanalyser.IndiaStateCodeAnalyser.{loadIndiaStateCode, printStateCode, sortStateCodeByStateName}
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 
@@ -22,6 +22,9 @@ object CSVDriver {
 
       sortStateCodeByStateName()
       printStateCode()
+
+      sortStateCensusDataByPopulation()
+      printStateCensusData()
     }
     catch{
       case e: CensusAnalyzerException => e.printStackTrace()
