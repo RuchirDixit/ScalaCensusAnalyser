@@ -6,6 +6,8 @@ import java.util
 import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
 import com.bridgelabz.censusanalyser.CensusLoader.checkFileProperties
 
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
+
 /**
  * Created on 12/3/2020.
  * Class: IndiaStateCodeAnalyser.scala
@@ -14,6 +16,7 @@ import com.bridgelabz.censusanalyser.CensusLoader.checkFileProperties
 object IndiaStateCodeAnalyser {
 
   var table: util.List[IndiaStateCode] = new util.ArrayList()
+  var map: Map[String, IndiaStateCode] = Map()
 
   def loadIndiaStateCode(path: String = "asset/IndiaStateCode.csv"): Int = {
 
@@ -21,7 +24,14 @@ object IndiaStateCodeAnalyser {
 
     val readerStateCensus = Files.newBufferedReader(Paths.get(path))
     table = createCSVBuilder().fetchList(readerStateCensus, classOf[IndiaStateCode])
+
+    loadIndiaStateCodeAsMap(path)
     table.size()
+  }
+
+  def loadIndiaStateCodeAsMap(path: String = "asset/IndiaStateCode.csv"): Unit = {
+
+    map = table.map(item => (item.state, item)).toMap
   }
 
   def sortStateCodeByColumnIndex(column: Int): Unit = {

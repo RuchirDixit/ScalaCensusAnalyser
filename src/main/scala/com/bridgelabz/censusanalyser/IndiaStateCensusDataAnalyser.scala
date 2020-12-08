@@ -7,9 +7,12 @@ import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
 import com.bridgelabz.censusanalyser.CensusLoader.{checkFileProperties, loadCSVData}
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
+
 object IndiaStateCensusDataAnalyser {
 
   var table: util.List[IndiaStateCensus] = new util.ArrayList()
+  var map: Map[String, IndiaStateCensus] = Map[String, IndiaStateCensus]()
 
   @throws[CensusAnalyzerException]
   def loadIndiaStateCensusData(path: String = "asset/IndiaStateCensusData.csv"): Int = {
@@ -18,7 +21,14 @@ object IndiaStateCensusDataAnalyser {
 
     val readerStateCensus = Files.newBufferedReader(Paths.get(path))
     table = createCSVBuilder().fetchList(readerStateCensus, classOf[IndiaStateCensus])
+    loadIndiaStateCensusDataAsMap(path)
+
     table.size()
+  }
+
+  def loadIndiaStateCensusDataAsMap(path: String = "asset/IndiaStateCensusData.csv"): Unit = {
+
+    map = table.map(item => (item.state, item)).toMap
   }
 
   def sortStateCensusDataByColumnIndex(column: Int): Unit = {

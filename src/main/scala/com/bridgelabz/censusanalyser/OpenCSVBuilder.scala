@@ -6,6 +6,8 @@ import com.bridgelabz.censusanalyser.exception.{CSVBuilderException, CSVBuilderE
 import com.opencsv.bean.CsvToBean
 import com.opencsv.bean.CsvToBeanBuilder
 
+import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
+
 class OpenCSVBuilder extends CSVBuilderTrait {
   override def getIterator[T](reader: Reader, csvClass: Class[T]): util.Iterator[T] = {
     try {
