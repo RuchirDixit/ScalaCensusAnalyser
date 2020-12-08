@@ -4,6 +4,7 @@ import java.nio.file.{Files, Paths}
 import java.util
 
 import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
+import com.bridgelabz.censusanalyser.CensusLoader.{checkFileProperties, loadCSVData}
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 
 object IndiaStateCensusDataAnalyser {
@@ -13,9 +14,11 @@ object IndiaStateCensusDataAnalyser {
   @throws[CensusAnalyzerException]
   def loadIndiaStateCensusData(path: String = "asset/IndiaStateCensusData.csv"): Int = {
 
+    checkFileProperties(path, Array[String]("State","Population","AreaInSqKm","DensityPerSqKm"))
+
     val readerStateCensus = Files.newBufferedReader(Paths.get(path))
     table = createCSVBuilder().fetchList(readerStateCensus, classOf[IndiaStateCensus])
-    table.size() - 1
+    table.size()
   }
 
   def sortStateCensusDataByColumnIndex(column: Int): Unit = {

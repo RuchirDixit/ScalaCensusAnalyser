@@ -1,6 +1,7 @@
 package com.bridgelabz.censusanalyser
 
-import java.nio.file.{Files, Paths}
+import java.io.BufferedReader
+import java.nio.file.{Files, NoSuchFileException, Paths}
 import java.util
 
 import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
@@ -37,7 +38,7 @@ object CensusLoader {
             }
         }
         val colsArray: util.ArrayList[String] = new util.ArrayList()
-        for(stringAdd <- column){
+        for (stringAdd <- column) {
           colsArray.add(stringAdd)
         }
         table.add(colsArray)
@@ -49,7 +50,31 @@ object CensusLoader {
     catch {
       case _: java.io.FileNotFoundException =>
         throw new CensusAnalyzerException(Issue.PATH_INCORRECT)
-      case e =>throw e
+      case e => throw e
+    }
+  }
+
+  def checkFileProperties(filePath: String, headers: Array[String]): Unit = {
+    if (!filePath.endsWith(".csv")) {
+      throw new CensusAnalyzerException(Issue.INCORRECT_FILE)
+    }
+    try {
+      val fileReader = Files.newBufferedReader(Paths.get(filePath))
+      val line: String = fileReader.readLine()
+
+      val column = line.split(",").map(_.trim)
+      if (column.length != headers.length) {
+        throw new CensusAnalyzerException(Issue.INVALID_DELIMITER)
+      }
+      for (headerIndex <- headers.indices)
+        if (column(headerIndex).toLowerCase != headers(headerIndex).toLowerCase()) {
+          throw new CensusAnalyzerException(Issue.INVALID_FIELDS)
+        }
+
+      fileReader.close()
+    }
+    catch{
+      case _:NoSuchFileException => throw new CensusAnalyzerException(Issue.PATH_INCORRECT)
     }
   }
 }

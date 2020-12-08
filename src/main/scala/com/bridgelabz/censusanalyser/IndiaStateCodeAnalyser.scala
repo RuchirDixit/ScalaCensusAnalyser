@@ -4,6 +4,7 @@ import java.nio.file.{Files, Paths}
 import java.util
 
 import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
+import com.bridgelabz.censusanalyser.CensusLoader.checkFileProperties
 
 /**
  * Created on 12/3/2020.
@@ -16,9 +17,11 @@ object IndiaStateCodeAnalyser {
 
   def loadIndiaStateCode(path: String = "asset/IndiaStateCode.csv"): Int = {
 
+    checkFileProperties(path, Array[String]("SrNo","State Name","TIN","StateCode"))
+
     val readerStateCensus = Files.newBufferedReader(Paths.get(path))
     table = createCSVBuilder().fetchList(readerStateCensus, classOf[IndiaStateCode])
-    table.size() - 1
+    table.size()
   }
 
   def sortStateCodeByColumnIndex(column: Int): Unit = {

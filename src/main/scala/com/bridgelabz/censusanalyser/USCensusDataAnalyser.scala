@@ -4,6 +4,7 @@ import java.nio.file.{Files, Paths}
 import java.util
 
 import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
+import com.bridgelabz.censusanalyser.CensusLoader.checkFileProperties
 
 /**
  * Created on 12/7/2020.
@@ -16,9 +17,11 @@ object USCensusDataAnalyser {
 
   def loadUSCensusData(path: String = "asset/USCensusData.csv"): Int = {
 
+    checkFileProperties(path, Array[String]("State Id","State","Population","Housing units","Total area","Water area","Land area","Population Density","Housing Density"))
+
     val readerStateCensus = Files.newBufferedReader(Paths.get(path))
     table = createCSVBuilder().fetchList(readerStateCensus, classOf[USCensusData])
-    table.size() - 1
+    table.size()
   }
 
   def sortUSCensusDataByColumnIndex(column: Int): Unit = {
