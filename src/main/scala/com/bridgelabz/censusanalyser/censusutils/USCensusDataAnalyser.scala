@@ -1,10 +1,11 @@
-package com.bridgelabz.censusanalyser
+package com.bridgelabz.censusanalyser.censusutils
 
 import java.nio.file.{Files, Paths}
 import java.util
 
-import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
-import com.bridgelabz.censusanalyser.CensusLoader.checkFileProperties
+import com.bridgelabz.censusanalyser.censusutils.CensusLoader.checkFileProperties
+import com.bridgelabz.censusanalyser.csvutils.CSVBuilderFactory.createCSVBuilder
+import com.bridgelabz.censusanalyser.models.{CensusDAO, USCensusData}
 
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
@@ -20,7 +21,7 @@ object USCensusDataAnalyser {
 
   def loadUSCensusData(path: String = "asset/USCensusData.csv"): Int = {
 
-    checkFileProperties(path, Array[String]("State Id","State","Population","Housing units","Total area","Water area","Land area","Population Density","Housing Density"))
+    checkFileProperties(path, Array[String]("State Id", "State", "Population", "Housing units", "Total area", "Water area", "Land area", "Population Density", "Housing Density"))
 
     val readerStateCensus = Files.newBufferedReader(Paths.get(path))
     table = createCSVBuilder().fetchList(readerStateCensus, classOf[USCensusData])
@@ -40,19 +41,31 @@ object USCensusDataAnalyser {
         val o2Int = o2.get(column).asInstanceOf[Double]
         o1Int.compareTo(o2Int)
       }
-      catch{
-        case _:Exception =>
-          o1.get(column).asInstanceOf[String].compareTo(o2.get(column).asInstanceOf[String])
+      catch {
+        case _: Exception =>
+          try{
+            val o1Int = o1.get(column).asInstanceOf[Integer]
+            val o2Int = o2.get(column).asInstanceOf[Integer]
+            o1Int.compareTo(o2Int)
+          }
+          catch{
+            case e:Exception =>
+              o1.get(column).asInstanceOf[String].compareTo(o2.get(column).asInstanceOf[String])
+          }
       }
     })
   }
 
-  def sortUSCensusDataByStateName(): Unit ={
+  def sortUSCensusDataByStateName(): Unit = {
     sortUSCensusDataByColumnIndex(1)
   }
 
-  def printUSCensusData(): Unit ={
-    for(index <- 0 until table.size()){
+  def sortUSCensusDataByPopulation(): Unit = {
+    sortUSCensusDataByColumnIndex(2)
+  }
+
+  def printUSCensusData(): Unit = {
+    for (index <- 0 until table.size()) {
       println(table.get(index))
     }
   }

@@ -1,8 +1,8 @@
 package com.bridgelabz.censusanalysertest
 
-import com.bridgelabz.censusanalyser.IndiaStateCensusDataAnalyser.loadIndiaStateCensusData
-import com.bridgelabz.censusanalyser.IndiaStateCodeAnalyser.loadIndiaStateCode
-import com.bridgelabz.censusanalyser.USCensusDataAnalyser.loadUSCensusData
+import com.bridgelabz.censusanalyser.censusutils.IndiaStateCensusDataAnalyser.loadIndiaStateCensusData
+import com.bridgelabz.censusanalyser.censusutils.IndiaStateCodeAnalyser.loadIndiaStateCode
+import com.bridgelabz.censusanalyser.censusutils.USCensusDataAnalyser.loadUSCensusData
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException.Issue
 import org.scalatest.FunSuite

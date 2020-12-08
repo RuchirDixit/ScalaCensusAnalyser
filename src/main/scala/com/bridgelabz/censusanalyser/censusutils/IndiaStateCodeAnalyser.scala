@@ -1,10 +1,11 @@
-package com.bridgelabz.censusanalyser
+package com.bridgelabz.censusanalyser.censusutils
 
 import java.nio.file.{Files, Paths}
 import java.util
 
-import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
-import com.bridgelabz.censusanalyser.CensusLoader.checkFileProperties
+import com.bridgelabz.censusanalyser.censusutils.CensusLoader.checkFileProperties
+import com.bridgelabz.censusanalyser.csvutils.CSVBuilderFactory.createCSVBuilder
+import com.bridgelabz.censusanalyser.models.{CensusDAO, IndiaStateCode}
 
 import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
 
@@ -20,7 +21,7 @@ object IndiaStateCodeAnalyser {
 
   def loadIndiaStateCode(path: String = "asset/IndiaStateCode.csv"): Int = {
 
-    checkFileProperties(path, Array[String]("SrNo","State Name","TIN","StateCode"))
+    checkFileProperties(path, Array[String]("SrNo", "State Name", "TIN", "StateCode"))
 
     val readerStateCensus = Files.newBufferedReader(Paths.get(path))
     table = createCSVBuilder().fetchList(readerStateCensus, classOf[IndiaStateCode])
@@ -41,19 +42,19 @@ object IndiaStateCodeAnalyser {
         val o2Int = o2.get(column).asInstanceOf[Integer]
         o1Int.compareTo(o2Int)
       }
-      catch{
-        case e:Exception =>
+      catch {
+        case e: Exception =>
           o1.get(column).asInstanceOf[String].compareTo(o2.get(column).asInstanceOf[String])
       }
     })
   }
 
-  def sortStateCodeByStateName(): Unit ={
+  def sortStateCodeByStateName(): Unit = {
     sortStateCodeByColumnIndex(1)
   }
 
-  def printStateCode(): Unit ={
-    for(index <- 0 until table.size()){
+  def printStateCode(): Unit = {
+    for (index <- 0 until table.size()) {
       println(table.get(index))
     }
   }

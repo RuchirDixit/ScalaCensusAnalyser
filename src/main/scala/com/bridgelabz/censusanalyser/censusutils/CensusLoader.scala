@@ -1,10 +1,8 @@
-package com.bridgelabz.censusanalyser
+package com.bridgelabz.censusanalyser.censusutils
 
-import java.io.BufferedReader
 import java.nio.file.{Files, NoSuchFileException, Paths}
 import java.util
 
-import com.bridgelabz.censusanalyser.CSVBuilderFactory.createCSVBuilder
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException.Issue
 
@@ -74,8 +72,8 @@ object CensusLoader {
 
       fileReader.close()
     }
-    catch{
-      case _:NoSuchFileException => throw new CensusAnalyzerException(Issue.PATH_INCORRECT)
+    catch {
+      case _: NoSuchFileException => throw new CensusAnalyzerException(Issue.PATH_INCORRECT)
     }
   }
 }

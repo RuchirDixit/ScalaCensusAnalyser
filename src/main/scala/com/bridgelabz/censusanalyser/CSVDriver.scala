@@ -1,8 +1,8 @@
 package com.bridgelabz.censusanalyser
 
-import com.bridgelabz.censusanalyser.IndiaStateCensusDataAnalyser.{loadIndiaStateCensusData, printStateCensusData, sortStateCensusDataByPopulation, sortStateCensusDataByStateName, table}
-import com.bridgelabz.censusanalyser.IndiaStateCodeAnalyser.{loadIndiaStateCode, printStateCode, sortStateCodeByStateName}
-import com.bridgelabz.censusanalyser.USCensusDataAnalyser.{loadUSCensusData, printUSCensusData, sortUSCensusDataByStateName}
+import com.bridgelabz.censusanalyser.censusutils.IndiaStateCensusDataAnalyser.{loadIndiaStateCensusData, printStateCensusData, sortStateCensusDataByArea, sortStateCensusDataByPopulation, sortStateCensusDataByStateName, table}
+import com.bridgelabz.censusanalyser.censusutils.IndiaStateCodeAnalyser.{loadIndiaStateCode, printStateCode, sortStateCodeByStateName}
+import com.bridgelabz.censusanalyser.censusutils.USCensusDataAnalyser.{loadUSCensusData, printUSCensusData, sortUSCensusDataByPopulation, sortUSCensusDataByStateName}
 import com.bridgelabz.censusanalyser.exception.CensusAnalyzerException
 
 /**
@@ -17,7 +17,7 @@ object CSVDriver {
       loadIndiaStateCode()
       loadUSCensusData()
 
-      println("1. Sort by State Name [India-Census Database]\n2. Sort by Population [India-Census Database]\n3. Sort by State Name [India-State-Code Database]\n4. Sort by State Name [US-State-Census Database]");
+      println("1. Sort by State Name [India-Census Database]\n2. Sort by State Size [India-Census Database]\n3. Sort by Population [India-Census Database]\n4. Sort by State Name [India-State-Code Database]\n5. Sort by State Name [US-State-Census Database]\n6. Sort by Population [US-State-Census Database]");
       try{
         val choice = scala.io.StdIn.readInt()
         choice match {
@@ -25,13 +25,19 @@ object CSVDriver {
             sortStateCensusDataByStateName()
             printStateCensusData()
           case 2 =>
-            sortStateCensusDataByPopulation()
+            sortStateCensusDataByArea()
             printStateCensusData()
           case 3 =>
+            sortStateCensusDataByPopulation()
+            printStateCensusData()
+          case 4 =>
             sortStateCodeByStateName()
             printStateCode()
-          case 4 =>
+          case 5 =>
             sortUSCensusDataByStateName()
+            printUSCensusData()
+          case 6 =>
+            sortUSCensusDataByPopulation()
             printUSCensusData()
         }
       }

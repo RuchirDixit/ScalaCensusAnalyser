@@ -1,4 +1,4 @@
-package com.bridgelabz.censusanalyser
+package com.bridgelabz.censusanalyser.csvutils
 
 /**
  * Created on 12/5/2020.

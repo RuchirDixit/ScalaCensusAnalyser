@@ -1,4 +1,4 @@
-package com.bridgelabz.censusanalyser
+package com.bridgelabz.censusanalyser.models
 
 /**
  * Created on 12/7/2020.

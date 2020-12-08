@@ -1,12 +1,10 @@
-package com.bridgelabz.censusanalyser
+package com.bridgelabz.censusanalyser.csvutils
+
 import java.io.Reader
 import java.util
 
 import com.bridgelabz.censusanalyser.exception.{CSVBuilderException, CSVBuilderExceptionEnum}
-import com.opencsv.bean.CsvToBean
-import com.opencsv.bean.CsvToBeanBuilder
-
-import scala.collection.convert.ImplicitConversions.`collection AsScalaIterable`
+import com.opencsv.bean.{CsvToBean, CsvToBeanBuilder}
 
 class OpenCSVBuilder extends CSVBuilderTrait {
   override def getIterator[T](reader: Reader, csvClass: Class[T]): util.Iterator[T] = {
